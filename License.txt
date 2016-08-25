@@ -1,4 +1,3 @@
-/*
    Copyright 2016 Abhijit Kiran Valluri
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,20 +11,6 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-*/
 
-package com.abhijitvalluri.android.petpeeves;
-
-import org.junit.Test;
-
-import static org.junit.Assert.*;
-
-/**
- * To work on unit tests, switch the Test Artifact in the Build Variants view.
- */
-public class ExampleUnitTest {
-    @Test
-    public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
-    }
-}
+  (Note that all source code files are provided under this license as
+  specified in each individual file)
