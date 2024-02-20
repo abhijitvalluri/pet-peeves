@@ -26,8 +26,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
@@ -50,7 +50,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import static android.provider.ContactsContract.*;
-import static android.support.v4.app.ShareCompat.*;
+import static androidx.core.app.ShareCompat.*;
 
 /**
  * Crime Fragment view for the CriminalIntent app.

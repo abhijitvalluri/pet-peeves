@@ -17,7 +17,7 @@
 package com.abhijitvalluri.android.petpeeves;
 
 import android.content.Intent;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 /**
  * CrimeListActivity that shows a list of all the crimes in the CrimeLab.
