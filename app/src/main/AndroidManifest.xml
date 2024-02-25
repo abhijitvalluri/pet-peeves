@@ -13,7 +13,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/CriminalIntentTheme">
-        <activity android:name=".CrimeListActivity">
+        <activity android:name=".CrimeListActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -21,12 +22,10 @@
         </activity>
         <activity
             android:name=".CrimePagerActivity"
-            android:label="@string/app_name"
             android:parentActivityName=".CrimeListActivity">
         </activity>
         <activity
-            android:name=".DatePickerActivity"
-            android:label="@string/app_name">
+            android:name=".DatePickerActivity">
         </activity>
     </application>
 

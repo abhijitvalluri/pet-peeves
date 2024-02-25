@@ -23,7 +23,7 @@ import java.util.UUID;
  * Crime model for the CriminalIntent app
  */
 public class Crime {
-    private UUID mId;
+    private final UUID mId;
     private String mTitle;
     private Date mDate;
     private boolean mSolved;

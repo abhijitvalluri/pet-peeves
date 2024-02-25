@@ -16,6 +16,7 @@
 
 package com.abhijitvalluri.android.petpeeves;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +27,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import android.text.Editable;
@@ -56,7 +59,6 @@ import static androidx.core.app.ShareCompat.*;
  * Crime Fragment view for the CriminalIntent app.
  */
 public class CrimeFragment extends Fragment {
-    private static final String TAG = "CrimeFragment";
     private static final String PHONE_NUMBER_ERROR = "phoneNumberError";
     private static final String ARG_CRIME_ID = "crime_id";
     private static final String DIALOG_DATE = "dialog_date";
@@ -69,14 +71,10 @@ public class CrimeFragment extends Fragment {
 
     private Crime mCrime;
     private File mPhotoFile;
-    private EditText mTitleField;
     private Button mDateButton;
     private Button mTimeButton;
-    private CheckBox mSolvedCheckBox;
-    private Button mReportButton;
     private Button mSuspectButton;
     private Button mCallSuspectButton;
-    private ImageButton mPhotoButton;
     private ImageView mPhotoView;
     private Callbacks mCallbacks;
 
@@ -88,7 +86,7 @@ public class CrimeFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mCallbacks = (Callbacks) context;
     }
@@ -124,9 +122,7 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onGlobalLayout() {
                 updatePhotoView();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    mPhotoView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                }
+                mPhotoView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
     }
@@ -135,7 +131,7 @@ public class CrimeFragment extends Fragment {
                             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_crime, container, false);
 
-        mTitleField = (EditText) v.findViewById(R.id.crime_title);
+        EditText mTitleField = (EditText) v.findViewById(R.id.crime_title);
         mTitleField.setText(mCrime.getTitle());
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override
@@ -185,7 +181,7 @@ public class CrimeFragment extends Fragment {
             }
         });
 
-        mSolvedCheckBox = (CheckBox) v.findViewById(R.id.crime_solved);
+        CheckBox mSolvedCheckBox = (CheckBox) v.findViewById(R.id.crime_solved);
         mSolvedCheckBox.setChecked(mCrime.isSolved());
         mSolvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -195,7 +191,7 @@ public class CrimeFragment extends Fragment {
             }
         });
 
-        mReportButton = (Button) v.findViewById(R.id.crime_report);
+        Button mReportButton = (Button) v.findViewById(R.id.crime_report);
         mReportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -244,7 +240,7 @@ public class CrimeFragment extends Fragment {
 
         updateCallSuspectButton();
 
-        mPhotoButton = (ImageButton) v.findViewById(R.id.crime_camera);
+        ImageButton mPhotoButton = (ImageButton) v.findViewById(R.id.crime_camera);
         final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         boolean canTakePhoto = mPhotoFile != null &&
@@ -335,14 +331,12 @@ public class CrimeFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_item_delete_crime:
-                CrimeLab.get(getActivity()).deleteCrime(mCrime);
-                getActivity().finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.menu_item_delete_crime) {
+            CrimeLab.get(getActivity()).deleteCrime(mCrime);
+            getActivity().finish();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void updateTime() {
@@ -395,6 +389,7 @@ public class CrimeFragment extends Fragment {
         }
     }
 
+    @SuppressLint("Range")
     private String getSuspectPhoneNumber() {
         Cursor cursor = getContext().getContentResolver().query(
                         CommonDataKinds.Phone.CONTENT_URI,
@@ -406,8 +401,7 @@ public class CrimeFragment extends Fragment {
         try {
             // TODO(abhijitvalluri): Handle things when suspect has multiple phone numbers.
             cursor.moveToNext();
-            return cursor.getString(cursor.getColumnIndex(CommonDataKinds.Phone
-                    .NUMBER));
+            return cursor.getString(cursor.getColumnIndex(CommonDataKinds.Phone.NUMBER));
         } catch (Exception e){
             // Log.e(TAG, "Error fetching phone number of suspect");
             return PHONE_NUMBER_ERROR;
